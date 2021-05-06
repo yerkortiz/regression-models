@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"encoding/csv"
 	"encoding/json"
+	"fmt"
 	"log"
 	"os"
 	"sort"
@@ -53,20 +54,19 @@ func parseRaw(result []twitData, country string, disasterType string) []parsedDa
 	sort.Slice(result, func(i, j int) bool {
 		return result[i].Unix < result[j].Unix
 	})
-	current := (result[0].Unix - result[0].Unix%60)
 	var resultGrouped []parsedData
 	c := 0
-	for _, value := range result {
-		if current > value.Unix {
+	current := (result[0].Unix - result[0].Unix%60)
+	max := (result[len(result)-1].Unix + 60 - result[len(result)-1].Unix%60)
+	for i := 0; i < len(result) && current < (max+60); current += 60 {
+		for ; i < len(result) && current > result[i].Unix; i++ {
 			c++
-		} else {
-			temp := parsedData{current, country, disasterType, c}
-			resultGrouped = append(resultGrouped, temp)
-			c = 0
-			current += 60
+			fmt.Println(result[i].ID, " va al saco")
 		}
+		temp := parsedData{current, country, disasterType, c}
+		resultGrouped = append(resultGrouped, temp)
+		c = 0
 	}
-	resultGrouped = append(resultGrouped, parsedData{current, country, disasterType, c})
 	return resultGrouped
 }
 func writeCsv(parsedData []parsedData, outFilePath string) {
@@ -91,7 +91,7 @@ func writeCsv(parsedData []parsedData, outFilePath string) {
 
 }
 func main() {
-	inFilePath := "/Users/yerko/codes/twitter-traffic-predict/raw_data/nepal_2015.jsonl"
+	inFilePath := "/Users/yerko/codes/twitter-traffic-predict/raw_data/example.jsonl"
 	country := "Nepal"
 	disasterType := "Earthquake"
 	outFilePath := "/Users/yerko/codes/twitter-traffic-predict/datasets/dataset.csv"
