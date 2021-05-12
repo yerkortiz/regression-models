@@ -88,10 +88,9 @@ func writeCsv(parsedData []parsedData, outFilePath string) {
 		err := writer.Write(value)
 		evalErr(err)
 	}
-
 }
 func main() {
-	inFilePath := "/Users/yerko/codes/twitter-traffic-predict/raw_data/example.jsonl"
+	inFilePath := "/Users/yerko/codes/twitter-traffic-predict/raw_data/nepal_2015.jsonl"
 	country := "Nepal"
 	disasterType := "Earthquake"
 	outFilePath := "/Users/yerko/codes/twitter-traffic-predict/datasets/dataset.csv"
