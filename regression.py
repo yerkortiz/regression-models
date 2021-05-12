@@ -121,7 +121,7 @@ history = model.fit(normed_train_data, train_labels, epochs=EPOCHS,
 
 loss, mae, mse = model.evaluate(normed_test_data, test_labels, verbose=2)
 
-print("Testing set Mean Abs Error: {:5.2f} Unix".format(mae))
+print("Testing set Mean Abs Error: {:5.2f} Quantity".format(mae))
 
 
 test_predictions = model.predict(normed_test_data).flatten()
