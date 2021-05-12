@@ -112,12 +112,12 @@ plot_history(history)
 
 
 model = build_model()
-early_stop = keras.callbacks.EarlyStopping(monitor='val_loss', patience=10)
+early_stop = keras.callbacks.EarlyStopping(monitor='loss', patience=10)
 
 history = model.fit(normed_train_data, train_labels, epochs=EPOCHS,
                     validation_split = 0.2, verbose=0, callbacks=[early_stop, PrintDot()])
 
-#plot_history(history)
+plot_history(history)
 
 loss, mae, mse = model.evaluate(normed_test_data, test_labels, verbose=2)
 
