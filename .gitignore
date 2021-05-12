@@ -1,4 +1,4 @@
 
 *.csv
 *.jsonl
-*.DS_Store
+.DS_Store
