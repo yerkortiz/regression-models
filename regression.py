@@ -1,142 +1,58 @@
-import pathlib
-import matplotlib.pyplot as plt
 import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+import numpy as np
+import matplotlib.pyplot as plt
 import seaborn as sns
-import tensorflow as tf
 
-from tensorflow import keras
-from tensorflow.keras import layers
-
-print(tf.__version__)
-#transformar country y disaster a datos numericos
 def load_data(inputPath):
     cols = ["Country", "Unix", "Disaster", "Quantity"]
     df = pd.read_csv(inputPath, sep=",", header=None, names=cols)
     return df
 
-dataset_path = "/Users/yerko/codes/twitter-traffic-predict/datasets/dataset.csv"
-raw_dataset = load_data(dataset_path)
-dataset = raw_dataset.copy()
-dataset.tail()
+def get_metrics(Y, Y_pred):#metrics
+    from sklearn import metrics
+    print('Mean Absolute Error:', metrics.mean_absolute_error(Y, Y_pred))
+    print('Mean Squared Error:', metrics.mean_squared_error(Y, Y_pred))
+    print('Root Mean Squared Error:', np.sqrt(metrics.mean_squared_error(Y, Y_pred)))
+    #print('R2 Score:', metrics.r2_score(Y, Y_pred))
 
-dataset.isna().sum()
-dataset = dataset.dropna()
-
-print(dataset)
-
-train_dataset = dataset.sample(frac=0.8,random_state=0)
-test_dataset = dataset.drop(train_dataset.index)
-
-sns.pairplot(train_dataset[["Unix", "Quantity"]], diag_kind="kde")
+datasetPath = 'datasets/dataset.csv'
+df = load_data(datasetPath)
+#plot dataframe (quantity, unix)
+df.plot(x='Quantity', y='Unix', style='o')
+plt.title('Unix, Quantity')
+plt.xlabel('Quantity')
+plt.ylabel('Unix')
 plt.show()
 
-train_stats = train_dataset.describe()
-train_stats.pop("Quantity")
-train_stats = train_stats.transpose()
-train_stats
+#set train dataframe
+df1 = df[['Unix', 'Quantity']]
+print(df1.shape)
+print(df1.head())
+print(df1.describe())
+X = df1.iloc[:, :-1].values.reshape(-1, 1)
+Y = df1.iloc[:, 1].values.reshape(-1, 1)
 
-train_labels = train_dataset.pop('Quantity')
-test_labels = test_dataset.pop('Quantity')
+def linearRegression(X, Y):
+    print(X.shape, Y.shape)
+    from sklearn.model_selection import train_test_split
+    x_train, x_test, y_train, y_test = train_test_split(X, Y, test_size=0.2, random_state=1234)
+    linear_regressor = LinearRegression()  
+    linear_regressor.fit(x_train, y_train)  
+    Y_pred = linear_regressor.predict(x_test)
+    plt.scatter(x_train, y_train)
+    plt.plot(x_test, Y_pred, color='red')
+    plt.show()
+    get_metrics(y_test, Y_pred)
+    #y = linear_regressor.predict(np.array([0]).reshape(-1,1))
+    #print(y)
+    
+linearRegression(X, Y)
 
-def norm(x):
-  return (x - train_stats['mean']) / train_stats['std']
-normed_train_data = norm(train_dataset)
-normed_test_data = norm(test_dataset)
-print(normed_train_data)
-
-def build_model():
-  model = keras.Sequential([
-    layers.Dense(64, activation='relu', input_shape=[len(train_dataset.keys())]),
-    layers.Dense(64, activation='relu'),
-    layers.Dense(1)
-  ])
-
-  optimizer = tf.keras.optimizers.RMSprop(0.001)
-
-  model.compile(loss='mse', optimizer=optimizer, metrics=['mae', 'mse'])
-  return model
-
-model = build_model()
-
-model.summary()
-
-example_batch = normed_train_data[:10]
-example_result = model.predict(example_batch)
-print(example_result)
-
-# epochs
-class PrintDot(keras.callbacks.Callback):
-  def on_epoch_end(self, epoch, logs):
-    if epoch % 100 == 0: print('')
-    print('.', end='')
-
-EPOCHS = 1000
-
-history = model.fit(
-  normed_train_data, train_labels,
-  epochs=EPOCHS, validation_split = 0.2, verbose=0,
-  callbacks=[PrintDot()])
-
-hist = pd.DataFrame(history.history)
-hist['epoch'] = history.epoch
-hist.tail()
-print('\n', hist['epoch'])
-
-def plot_history(history):
-  hist = pd.DataFrame(history.history)
-  hist['epoch'] = history.epoch
-
-  plt.figure()
-  plt.xlabel('Epoch')
-  plt.ylabel('Mean Abs Error ')
-  plt.plot(hist['epoch'], hist['mae'],
-           label='Train Error')
-  plt.plot(hist['epoch'], hist['val_mae'],
-           label = 'Val Error')
-  #plt.ylim([0,5000000000000000])
-  plt.legend()
-
-  plt.figure()
-  plt.xlabel('Epoch')
-  plt.ylabel('Mean Square Error')
-  plt.plot(hist['epoch'], hist['mse'],
-           label='Train Error')
-  plt.plot(hist['epoch'], hist['val_mse'],
-           label = 'Val Error')
-  #plt.ylim([0,2000000000000000])
-  plt.legend()
-  plt.show()
-
-
-plot_history(history)
-
-
-model = build_model()
-early_stop = keras.callbacks.EarlyStopping(monitor='loss', patience=10)
-
-history = model.fit(normed_train_data, train_labels, epochs=EPOCHS,
-                    validation_split = 0.2, verbose=0, callbacks=[early_stop, PrintDot()])
-
-plot_history(history)
-
-loss, mae, mse = model.evaluate(normed_test_data, test_labels, verbose=2)
-
-print("Testing set Mean Abs Error: {:5.2f} Quantity".format(mae))
-
-
-test_predictions = model.predict(normed_test_data).flatten()
-
-plt.scatter(test_labels, test_predictions)
-plt.xlabel('True Values Quantity')
-plt.ylabel('Predictions Quantity')
-plt.axis('equal')
-plt.axis('square')
-_ = plt.plot([-1000, 1000], [-1000, 1000])
-plt.show()
-
-
-error = test_predictions - test_labels
-plt.hist(error, bins = 25)
-plt.xlabel("Prediction Error")
-_ = plt.ylabel("Count")
-plt.show()
+def logisticRegression(X, Y):
+    X_train, X_test, y_train, y_test  = train_test_split(X, Y,train_size=0.80, random_state=1234)
+    from sklearn.linear_model import LogisticRegression
+    log_model = LogisticRegression()
+    log_model = log_model.fit(X=X_train, y=y_train)    
+    y_pred = log_model.predict(X_test)

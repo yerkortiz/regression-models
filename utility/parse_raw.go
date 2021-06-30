@@ -1,4 +1,4 @@
-package utility
+package main
 
 import (
 	"bufio"
@@ -9,6 +9,7 @@ import (
 	"os"
 	"sort"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -50,18 +51,18 @@ func readRaw(fileName string) []twitData {
 	file.Close()
 	return result
 }
-func parseRaw(result []twitData, country string, disasterType string) []parsedData {
+func parseRaw(result []twitData, country string, disasterType string, secondsInterval int64) []parsedData {
 	sort.Slice(result, func(i, j int) bool {
 		return result[i].Unix < result[j].Unix
 	})
 	var resultGrouped []parsedData
 	c := 0
-	current := (result[0].Unix - result[0].Unix%60)
-	max := (result[len(result)-1].Unix + 60 - result[len(result)-1].Unix%60)
-	for i := 0; i < len(result) && current < (max+60); current += 60 {
+	current := (result[0].Unix - result[0].Unix%secondsInterval)
+	max := (result[len(result)-1].Unix + secondsInterval - result[len(result)-1].Unix%secondsInterval)
+	for i := 0; i < len(result) && current < (max+secondsInterval); current += secondsInterval {
 		for ; i < len(result) && current > result[i].Unix; i++ {
 			c++
-			fmt.Println(result[i].ID, " va al saco")
+			fmt.Println(result[i].ID)
 		}
 		temp := parsedData{current, country, disasterType, c}
 		resultGrouped = append(resultGrouped, temp)
@@ -90,11 +91,17 @@ func writeCsv(parsedData []parsedData, outFilePath string) {
 	}
 }
 func main() {
-	inFilePath := "/Users/yerko/codes/twitter-traffic-predict/raw_data/nepal_2015.jsonl"
-	country := "Nepal"
-	disasterType := "Earthquake"
+	inFilePath := "/Users/yerko/codes/twitter-traffic-predict/raw_data/chile_2014.jsonl"
+	country := "1"
+	disasterType := "1"
 	outFilePath := "/Users/yerko/codes/twitter-traffic-predict/datasets/dataset.csv"
 	result := readRaw(inFilePath)
-	resultGrouped := parseRaw(result, country, disasterType)
-	writeCsv(resultGrouped, outFilePath)
+	resultGrouped := parseRaw(result, country, disasterType, 30)
+	writeCsv(resultGrouped, strings.Replace(outFilePath, "dataset.csv", "dataset1_30.csv", -1))
+	resultGrouped = parseRaw(result, country, disasterType, 60)
+	writeCsv(resultGrouped, strings.Replace(outFilePath, "dataset.csv", "dataset1_60.csv", -1))
+	resultGrouped = parseRaw(result, country, disasterType, 180)
+	writeCsv(resultGrouped, strings.Replace(outFilePath, "dataset.csv", "dataset1_180.csv", -1))
+	resultGrouped = parseRaw(result, country, disasterType, 300)
+	writeCsv(resultGrouped, strings.Replace(outFilePath, "dataset.csv", "dataset1_300.csv", -1))
 }
