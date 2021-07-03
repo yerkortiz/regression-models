@@ -17,7 +17,11 @@ def get_metrics(Y, Y_pred):#metrics
     print('Root Mean Squared Error:', np.sqrt(metrics.mean_squared_error(Y, Y_pred)))
     #print('R2 Score:', metrics.r2_score(Y, Y_pred))
 
-datasetPath = 'datasets/dataset.csv'
+#datasetPath = 'datasets/dataset1h_30.csv'
+#datasetPath = 'datasets/dataset1h_60.csv'
+#datasetPath = 'datasets/dataset1h_180.csv'
+datasetPath = 'datasets/dataset1h_300.csv'
+
 df = load_data(datasetPath)
 #plot dataframe (quantity, unix)
 df.plot(x='Quantity', y='Unix', style='o')
@@ -28,9 +32,9 @@ plt.show()
 
 #set train dataframe
 df1 = df[['Unix', 'Quantity']]
-print(df1.shape)
-print(df1.head())
-print(df1.describe())
+#print(df1.shape)
+#print(df1.head())
+#print(df1.describe())
 X = df1.iloc[:, :-1].values.reshape(-1, 1)
 Y = df1.iloc[:, 1].values.reshape(-1, 1)
 

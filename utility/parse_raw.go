@@ -91,17 +91,17 @@ func writeCsv(parsedData []parsedData, outFilePath string) {
 	}
 }
 func main() {
-	inFilePath := "/Users/yerko/codes/twitter-traffic-predict/raw_data/chile_2014.jsonl"
+	inFilePath := "/Users/yerko/codes/twitter-traffic-predict/raw_data/harvey-irma-maria.jsonl"
 	country := "1"
 	disasterType := "1"
 	outFilePath := "/Users/yerko/codes/twitter-traffic-predict/datasets/dataset.csv"
 	result := readRaw(inFilePath)
 	resultGrouped := parseRaw(result, country, disasterType, 30)
-	writeCsv(resultGrouped, strings.Replace(outFilePath, "dataset.csv", "dataset1_30.csv", -1))
+	writeCsv(resultGrouped, strings.Replace(outFilePath, "dataset.csv", "dataset1h_30.csv", -1))
 	resultGrouped = parseRaw(result, country, disasterType, 60)
-	writeCsv(resultGrouped, strings.Replace(outFilePath, "dataset.csv", "dataset1_60.csv", -1))
+	writeCsv(resultGrouped, strings.Replace(outFilePath, "dataset.csv", "dataset1h_60.csv", -1))
 	resultGrouped = parseRaw(result, country, disasterType, 180)
-	writeCsv(resultGrouped, strings.Replace(outFilePath, "dataset.csv", "dataset1_180.csv", -1))
+	writeCsv(resultGrouped, strings.Replace(outFilePath, "dataset.csv", "dataset1h_180.csv", -1))
 	resultGrouped = parseRaw(result, country, disasterType, 300)
-	writeCsv(resultGrouped, strings.Replace(outFilePath, "dataset.csv", "dataset1_300.csv", -1))
+	writeCsv(resultGrouped, strings.Replace(outFilePath, "dataset.csv", "dataset1h_300.csv", -1))
 }

@@ -1,0 +1,4 @@
+(40713, 1) (40713, 1)
+Mean Absolute Error: 78.64593863979661
+Mean Squared Error: 14399.48902642826
+Root Mean Squared Error: 119.99787092456374

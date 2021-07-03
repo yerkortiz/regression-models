@@ -1,0 +1,4 @@
+(33, 1) (33, 1)
+Mean Absolute Error: 523.2357753493956
+Mean Squared Error: 439921.3228076614
+Root Mean Squared Error: 663.265650254603

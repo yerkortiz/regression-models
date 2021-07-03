@@ -1,0 +1,4 @@
+(11485, 1) (11485, 1)
+Mean Absolute Error: 506.5575491831199
+Mean Squared Error: 773037.1088490551
+Root Mean Squared Error: 879.2252890181533

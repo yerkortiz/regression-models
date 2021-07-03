@@ -1,0 +1,4 @@
+(27610, 1) (27610, 1)
+Mean Absolute Error: 84.59797533507935
+Mean Squared Error: 14080.549539418334
+Root Mean Squared Error: 118.66149139218811

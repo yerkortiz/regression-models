@@ -1,0 +1,4 @@
+(13572, 1) (13572, 1)
+Mean Absolute Error: 235.24429864331765
+Mean Squared Error: 124067.06040702978
+Root Mean Squared Error: 352.2315437422233

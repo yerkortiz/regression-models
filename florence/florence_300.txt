@@ -1,0 +1,4 @@
+(8144, 1) (8144, 1)
+Mean Absolute Error: 407.1805288921597
+Mean Squared Error: 388702.6123624824
+Root Mean Squared Error: 623.4601930857193

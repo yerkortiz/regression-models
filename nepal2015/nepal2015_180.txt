@@ -1,0 +1,4 @@
+(53, 1) (53, 1)
+Mean Absolute Error: 180.02210470898584
+Mean Squared Error: 76793.08638224959
+Root Mean Squared Error: 277.11565524569266

@@ -1,0 +1,4 @@
+(19141, 1) (19141, 1)
+Mean Absolute Error: 309.705736018351
+Mean Squared Error: 284209.6546780415
+Root Mean Squared Error: 533.1131724859569

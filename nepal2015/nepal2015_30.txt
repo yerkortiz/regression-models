@@ -1,0 +1,4 @@
+(308, 1) (308, 1)
+Mean Absolute Error: 65.1628195061123
+Mean Squared Error: 6570.594547812366
+Root Mean Squared Error: 81.05920396730014

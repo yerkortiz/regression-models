@@ -1,0 +1,4 @@
+(5524, 1) (5524, 1)
+Mean Absolute Error: 409.1894866532738
+Mean Squared Error: 298352.99696438626
+Root Mean Squared Error: 546.2169870705105

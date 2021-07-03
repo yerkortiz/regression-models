@@ -1,0 +1,4 @@
+(255, 1) (255, 1)
+Mean Absolute Error: 339.26050258727344
+Mean Squared Error: 228456.60894202258
+Root Mean Squared Error: 477.97134740695765

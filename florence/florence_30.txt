@@ -1,0 +1,4 @@
+(81423, 1) (81423, 1)
+Mean Absolute Error: 39.48188306051957
+Mean Squared Error: 3577.745326588925
+Root Mean Squared Error: 59.81425688403163

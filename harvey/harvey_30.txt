@@ -1,0 +1,4 @@
+(114840, 1) (114840, 1)
+Mean Absolute Error: 54.316891630949044
+Mean Squared Error: 8491.149360229496
+Root Mean Squared Error: 92.14743273813707

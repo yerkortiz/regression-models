@@ -1,0 +1,4 @@
+(1267, 1) (1267, 1)
+Mean Absolute Error: 71.27496636536075
+Mean Squared Error: 11786.94377729723
+Root Mean Squared Error: 108.56769214318425

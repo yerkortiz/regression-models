@@ -1,0 +1,4 @@
+(9205, 1) (9205, 1)
+Mean Absolute Error: 256.66269100878117
+Mean Squared Error: 127316.03707272874
+Root Mean Squared Error: 356.8137288176125

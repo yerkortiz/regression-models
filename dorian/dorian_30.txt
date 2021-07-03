@@ -1,0 +1,4 @@
+(55219, 1) (55219, 1)
+Mean Absolute Error: 42.310033578614096
+Mean Squared Error: 3460.808729403581
+Root Mean Squared Error: 58.82863868392317

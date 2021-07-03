@@ -1,0 +1,4 @@
+(155, 1) (155, 1)
+Mean Absolute Error: 40.49216415252416
+Mean Squared Error: 2337.2110076135095
+Root Mean Squared Error: 48.34471023404225

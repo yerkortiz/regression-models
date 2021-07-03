@@ -1,0 +1,4 @@
+(57421, 1) (57421, 1)
+Mean Absolute Error: 104.47380594178235
+Mean Squared Error: 32330.064221579145
+Root Mean Squared Error: 179.8056290041531

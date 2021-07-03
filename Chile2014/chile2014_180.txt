@@ -1,0 +1,4 @@
+(424, 1) (424, 1)
+Mean Absolute Error: 212.64469000011243
+Mean Squared Error: 105168.78777818251
+Root Mean Squared Error: 324.297375533911

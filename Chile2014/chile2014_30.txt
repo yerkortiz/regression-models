@@ -1,0 +1,4 @@
+(2533, 1) (2533, 1)
+Mean Absolute Error: 39.25936115417479
+Mean Squared Error: 3552.929378565973
+Root Mean Squared Error: 59.60645416870536
