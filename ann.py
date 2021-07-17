@@ -14,7 +14,7 @@ def load_data(inputPath):
     df1 = df[['Unix', 'Quantity']]
     return df1
 
-#dataset_path = "/Users/yerko/codes/twitter-traffic-predict/datasets/dataset1_30.csv"
+dataset_path = "/Users/yerko/codes/twitter-traffic-predict/datasets/dataset1_30.csv"
 #dataset_path = "/Users/yerko/codes/twitter-traffic-predict/datasets/dataset1_60.csv"
 #dataset_path = "/Users/yerko/codes/twitter-traffic-predict/datasets/dataset1_180.csv"
 #dataset_path = "/Users/yerko/codes/twitter-traffic-predict/datasets/dataset1_300.csv"
@@ -35,7 +35,7 @@ def load_data(inputPath):
 #dataset_path = "/Users/yerko/codes/twitter-traffic-predict/datasets/dataset1f_300.csv"
 
 #dataset_path = "/Users/yerko/codes/twitter-traffic-predict/datasets/dataset1h_30.csv"
-dataset_path = "/Users/yerko/codes/twitter-traffic-predict/datasets/dataset1h_60.csv"
+#dataset_path = "/Users/yerko/codes/twitter-traffic-predict/datasets/dataset1h_60.csv"
 #dataset_path = "/Users/yerko/codes/twitter-traffic-predict/datasets/dataset1h_180.csv"
 #dataset_path = "/Users/yerko/codes/twitter-traffic-predict/datasets/dataset1h_300.csv"
 raw_dataset = load_data(dataset_path)
@@ -50,8 +50,8 @@ dataset = dataset.dropna()
 train_dataset = dataset.sample(frac=0.8,random_state=0)
 test_dataset = dataset.drop(train_dataset.index)
 
-#sns.pairplot(train_dataset[["Unix", "Quantity"]], diag_kind="kde")
-#plt.show()
+sns.pairplot(train_dataset[["Unix", "Quantity"]], diag_kind="kde")
+plt.show()
 
 train_stats = train_dataset.describe()
 train_stats.pop("Quantity")
@@ -60,6 +60,7 @@ train_stats
 
 train_labels = train_dataset.pop('Quantity')
 test_labels = test_dataset.pop('Quantity')
+
 
 def norm(x):
   return (x - train_stats['mean']) / train_stats['std']
@@ -78,33 +79,7 @@ def build_model():
 
   model.compile(loss='mse', optimizer=optimizer, metrics=['mae', 'mse'])
   return model
-"""
-model = build_model()
 
-model.summary()
-
-example_batch = normed_train_data[:10]
-example_result = model.predict(example_batch)
-print(example_result)
-
-# epochs
-class PrintDot(keras.callbacks.Callback):
-  def on_epoch_end(self, epoch, logs):
-    if epoch % 100 == 0: print('')
-    print('.', end='')
-
-EPOCHS = 1000
-
-history = model.fit(
-  normed_train_data, train_labels,
-  epochs=EPOCHS, validation_split = 0.2, verbose=0,
-  callbacks=[PrintDot()])
-
-hist = pd.DataFrame(history.history)
-hist['epoch'] = history.epoch
-hist.tail()
-print('\n', hist['epoch'])
-"""
 def plot_history(history):
   hist = pd.DataFrame(history.history)
   hist['epoch'] = history.epoch

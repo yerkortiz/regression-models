@@ -17,18 +17,18 @@ def get_metrics(Y, Y_pred):#metrics
     print('Root Mean Squared Error:', np.sqrt(metrics.mean_squared_error(Y, Y_pred)))
     #print('R2 Score:', metrics.r2_score(Y, Y_pred))
 
-#datasetPath = 'datasets/dataset1h_30.csv'
-#datasetPath = 'datasets/dataset1h_60.csv'
+datasetPath = 'datasets/dataset1_30.csv'
+#datasetPath = 'datasets/dataset1_60.csv'
 #datasetPath = 'datasets/dataset1h_180.csv'
-datasetPath = 'datasets/dataset1h_300.csv'
+#datasetPath = 'datasets/dataset1h_300.csv'
 
 df = load_data(datasetPath)
 #plot dataframe (quantity, unix)
-df.plot(x='Quantity', y='Unix', style='o')
-plt.title('Unix, Quantity')
-plt.xlabel('Quantity')
-plt.ylabel('Unix')
-plt.show()
+#df.plot(x='Quantity', y='Unix', style='o')
+#plt.title('Unix, Quantity')
+#plt.xlabel('Quantity')
+#plt.ylabel('Unix')
+#plt.show()
 
 #set train dataframe
 df1 = df[['Unix', 'Quantity']]
@@ -37,6 +37,16 @@ df1 = df[['Unix', 'Quantity']]
 #print(df1.describe())
 X = df1.iloc[:, :-1].values.reshape(-1, 1)
 Y = df1.iloc[:, 1].values.reshape(-1, 1)
+
+def plot_error(y_test, y_pred):
+    diff = y_test - y_pred
+    a = diff.reshape(1, len(diff))[0]
+    bins = [x for x in range(-200,200, 20)]
+    plt.hist(a, bins)
+    plt.title('Histogram of prediction errors')
+    plt.xlabel('MPG prediction error')
+    plt.ylabel('Frequency')
+    plt.show()
 
 def linearRegression(X, Y):
     print(X.shape, Y.shape)
@@ -49,14 +59,17 @@ def linearRegression(X, Y):
     plt.plot(x_test, Y_pred, color='red')
     plt.show()
     get_metrics(y_test, Y_pred)
+    plot_error(y_test, Y_pred)
     #y = linear_regressor.predict(np.array([0]).reshape(-1,1))
     #print(y)
     
 linearRegression(X, Y)
 
+"""
 def logisticRegression(X, Y):
     X_train, X_test, y_train, y_test  = train_test_split(X, Y,train_size=0.80, random_state=1234)
     from sklearn.linear_model import LogisticRegression
     log_model = LogisticRegression()
     log_model = log_model.fit(X=X_train, y=y_train)    
     y_pred = log_model.predict(X_test)
+"""
